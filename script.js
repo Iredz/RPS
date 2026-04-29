@@ -1,3 +1,12 @@
+let result = document.querySelector("#result")
+let hs = document.querySelector("#hs")
+let cs = document.querySelector("#cs")
+const rock = document.querySelector("#rockBtn")
+const paper = document.querySelector("#paperBtn")
+const scissors = document.querySelector("#scissorsBtn")
+let humanScore = 0;
+let computerScore = 0;
+
 function getComputerChoice() {
   choice = Math.floor(Math.random() * 3);
   switch (choice) {
@@ -10,40 +19,46 @@ function getComputerChoice() {
   }
 }
 
-let humanScore = 0;
-let computerScore = 0;
+function isGameOver() {
+  return humanScore === 5 || computerScore === 5
+}
 
-let result = document.querySelector("#result")
+hs.textContent = humanScore
+cs.textContent = computerScore
 
 function playRound(humanChoice, computerChoice) {
-  let hc = humanChoice;
-  let cc = computerChoice;
 
-  if (hc == "rock") {
-    if (cc == "paper") {
+
+  if (humanChoice == "rock") {
+    if (computerChoice == "paper") {
       computerScore += 1;
-    } else if (cc == "scissors") {
+    } else if (computerChoice == "scissors") {
       humanScore += 1;
     }
-  } else if (hc == "paper") {
-    if (cc == "rock") {
+  } else if (humanChoice == "paper") {
+    if (computerChoice == "rock") {
       humanScore += 1;
-    } else if (cc == "scissors") {
+    } else if (computerChoice == "scissors") {
       computerScore += 1;
     }
-  } else if (hc == "scissors") {
-    if (cc == "rock") {
+  } else if (humanChoice == "scissors") {
+    if (computerChoice == "rock") {
       computerScore += 1;
-    } else if (cc == "paper") {
+    } else if (computerChoice == "paper") {
       humanScore += 1;
     }
   }
-  result.textContent = `You: ${humanScore}    Computer: ${computerScore}`;
+  hs.textContent = humanScore
+  cs.textContent = computerScore
+  if (isGameOver()) {
+    alert("GAME OVER!")
+  }
+  if (humanScore == 5) {
+    alert("You are the winner!")
+  } else if (computerScore == 5) {
+    alert("You lost!")
+  }
 }
-
-const rock = document.querySelector("#rockBtn")
-const paper = document.querySelector("#paperBtn")
-const scissors = document.querySelector("#scissorsBtn")
 
 rock.addEventListener("click", () => {
   playRound("rock", getComputerChoice())
@@ -54,4 +69,5 @@ paper.addEventListener("click", () => {
 scissors.addEventListener("click", () => {
   playRound("scissors", getComputerChoice())
 })
+
 
